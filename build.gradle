@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.github.ravenlab'
-version '1.0.0-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -11,6 +11,11 @@ repositories {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 def junitVersion = '5.7.0'
