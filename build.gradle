@@ -1,9 +1,10 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
 }
 
 group 'com.github.ravenlab'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -11,6 +12,17 @@ repositories {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'com.github.ravenlab'
+            artifactId project.name
+            version '1.0.1'
+            from components.java
+        }
+    }
 }
 
 tasks.withType(JavaCompile) {
