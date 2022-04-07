@@ -17,9 +17,9 @@ test {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId 'com.github.ravenlab'
+            groupId group
             artifactId project.name
-            version '1.0.1'
+            version version
             from components.java
         }
     }
