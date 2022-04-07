@@ -18,7 +18,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JarClassScannerTest {
 
@@ -56,7 +56,7 @@ public class JarClassScannerTest {
                 }
             }
         }
-        assertTrue(collected.size() == 24);
+        assertEquals(24, collected.size());
     }
 
     private static void download(String url, File download) throws IOException,
