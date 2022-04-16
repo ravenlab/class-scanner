@@ -30,8 +30,9 @@ public class JarClassScanner implements ClassScanner<Class> {
                     if (className.startsWith(packagePattern) && className.endsWith(".class")) {
                         String loadedName = className.replace(".class", "");
                         Class<?> checkClass = Class.forName(loadedName, false, source.getClassLoader());
-                        if (superClazz.isAssignableFrom(checkClass)
-                                && !Modifier.isAbstract(checkClass.getModifiers())) {
+                        Collection<String> superClasses = getSuperClassNames(checkClass);
+                        if (!Modifier.isAbstract(checkClass.getModifiers()) &&
+                                superClasses.contains(superClazz.getName())) {
                             list.add((Class<? extends T>) checkClass);
                         }
                     }
@@ -41,5 +42,19 @@ public class JarClassScanner implements ClassScanner<Class> {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private Collection<String> getSuperClassNames(Class<?> clazz) {
+        Collection<String> names = new ArrayList<>();
+        return this.getSuperClassNamesRecur(clazz, names);
+    }
+
+    private Collection<String> getSuperClassNamesRecur(Class<?> clazz, Collection<String> names) {
+        Class<?> superClass = clazz.getSuperclass();
+        if (superClass == null || superClass.getName().equals(Object.class.getName())) {
+            return names;
+        }
+        names.add(superClass.getName());
+        return this.getSuperClassNamesRecur(superClass, names);
     }
 }
